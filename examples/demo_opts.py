@@ -54,6 +54,13 @@ def get_device(actual_args=None):
         config = cmdline.load_config(args.config)
         args = parser.parse_args(config + actual_args)
 
+    # Set the interface and i2c_port for the SH1106 driver
+    args.interface = 'i2c'
+    args.i2c_port = 1  # Assuming you are using i2c port 1
+
+    # Override the display argument to use SH1106
+    args.display = 'sh1106'
+
     # create device
     try:
         device = cmdline.create_device(args)
@@ -63,3 +70,6 @@ def get_device(actual_args=None):
     except error.Error as e:
         parser.error(e)
         return None
+
+if __name__ == "__main__":
+    get_device()
