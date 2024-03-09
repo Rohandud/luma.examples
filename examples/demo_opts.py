@@ -42,7 +42,7 @@ def display_settings(device, args):
 
 def get_device(actual_args=None):
     """
-    Create device from command-line arguments and return it.
+    Create SH1106 device from command-line arguments and return it.
     """
     if actual_args is None:
         actual_args = sys.argv[1:]
@@ -54,6 +54,9 @@ def get_device(actual_args=None):
         config = cmdline.load_config(args.config)
         args = parser.parse_args(config + actual_args)
 
+    # Override the display type to SH1106
+    args.display = "sh1106"
+
     # create device
     try:
         device = cmdline.create_device(args)
@@ -63,3 +66,10 @@ def get_device(actual_args=None):
     except error.Error as e:
         parser.error(e)
         return None
+
+if __name__ == "__main__":
+    try:
+        device = get_device()
+        # Add your main logic here if needed
+    except KeyboardInterrupt:
+        pass
